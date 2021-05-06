@@ -1,0 +1,172 @@
+<html>
+
+<head>
+  <title>Operaciones por Cuentabiente</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body style="background-color:coral">
+  <div style="margin:100px;">
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">Home</a>
+        <ul class="nav navbar-nav">
+          
+          <li class="active">
+            <a href="/operaciones">Operaciones</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="jumbotron" style="padding:40px;">
+      <label>Cuentahabiente</label><input id="cui" value=""/>
+      <label>Nombre</label><input id="name" value=""/>
+      <label>Apellido</label><input id="apellido" value=""/>
+      <button onclick="ViewReport()">Ver Operaciones</button>
+      <div>
+        Operaciones Realizadas
+      </div>
+      <div id="view">
+
+      </div>
+      <div>
+        Operaciones de Credito
+      </div>
+      <div id="view1">
+
+      </div>
+    </div>
+    
+
+
+  </div>
+</body>
+
+</html>
+<script>
+  function ViewReport() {
+    alert('Informacion en Proceso.....');
+    var name=$('#name').val();
+    var cui=$('#cui').val();
+    var apellido=$('#apellido').val();
+    $.ajax({
+      url: '/operaciones/View?name='+encodeURI(name)+'&cui='+cui+'&app='+encodeURI(apellido),
+      success: function (data) {
+        console.log(data);
+
+        var text="";
+        text="<table class=\"table\">";
+        text=text+"<tr>";
+        text=text+"<th>Fecha Transferencia";
+        text=text+"</th>";
+        text=text+"<th>Mi Banco";
+        text=text+"</th>";
+        text=text+"<th>Cuenta Acreditada";
+        text=text+"</th>";
+        text=text+"<th>Nombre";
+        text=text+"</th>";
+        text=text+"<th>Apellido";
+        text=text+"</th>";
+        text=text+"</th>";
+        text=text+"<th>Banco de Transferencia";
+        text=text+"</th>";
+        text=text+"</th>";
+        text=text+"<th>Monto";
+        text=text+"</th>";
+        text=text+"</tr>";
+        console.log(data);
+        var i=0;
+        var size=data.data.length;
+        for(Row in  data.data) {
+          text=text+"<tr>";
+          text=text+"<td>";
+          text=text+data.data[i].fechatransferencia;
+          text=text+"</td>";
+          text=text+"<td>";
+          text=text+data.data[i].nombreinstitucion1;
+          text=text+"</td>";
+          text=text+"<td>";
+          text=text+data.data[i].cui2;
+          text=text+"</td>";
+          text=text+"<td>";
+          text=text+data.data[i].nombre2;
+          text=text+"</td>";
+          text=text+"<td>";
+          text=text+data.data[i].apellido2;
+          text=text+"</td>";
+          text=text+"<td>";
+          text=text+data.data[i].nombreinstitucion2;
+          text=text+"</td>";
+          text=text+"<td>";
+          text=text+data.data[i].monto;
+          text=text+"</td>";
+          text=text+"</tr>";
+          i=i+1;
+        }
+        text=text+"</table>";
+        $("#view").append(text);
+
+
+        text="";
+        text="<table class=\"table\">";
+        text=text+"<tr>";
+        text=text+"<th>Fecha Transferencia";
+        text=text+"</th>";
+        text=text+"<th>Mi Banco";
+        text=text+"</th>";
+        text=text+"<th>Cuenta Debitada";
+        text=text+"</th>";
+        text=text+"<th>Nombre";
+        text=text+"</th>";
+        text=text+"<th>Apellido";
+        text=text+"</th>";
+        text=text+"</th>";
+        text=text+"<th>Banco de Transferencia";
+        text=text+"</th>";
+        text=text+"</th>";
+        text=text+"<th>Monto";
+        text=text+"</th>";
+        text=text+"</tr>";
+        console.log(data);
+        i=0;
+        size=data.data1.length;
+        for(Row in  data.data1){
+          text=text+"<tr>";
+          text=text+"<td>";
+          text=text+data.data1[i].fechatransferencia;
+          text=text+"</td>";
+          text=text+"<td>";
+          text=text+data.data1[i].nombreinstitucion2;
+          text=text+"</td>";
+          text=text+"<td>";
+          text=text+data.data1[i].cui1;
+          text=text+"</td>";
+          text=text+"<td>";
+          text=text+data.data1[i].nombre1;
+          text=text+"</td>";
+          text=text+"<td>";
+          text=text+data.data1[i].apellido1;
+          text=text+"</td>";
+          text=text+"<td>";
+          text=text+data.data1[i].nombreinstitucion1;
+          text=text+"</td>";
+          text=text+"<td>";
+          text=text+data.data1[i].monto;
+          text=text+"</td>";
+          text=text+"</tr>";
+          i=i+1;
+        }
+        
+
+        text=text+"</table>";
+
+        $("#view1").append(text);
+        
+      }
+    });
+  }
+
+</script>

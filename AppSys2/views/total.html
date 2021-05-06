@@ -1,0 +1,108 @@
+<html>
+
+<head>
+  <title>Operaciones por Cuentabiente</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body style="background-color:coral">
+  <div style="margin:100px;">
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">Home</a>
+        <ul class="nav navbar-nav">
+          
+          <li class="active">
+            <a href="/total">Total</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="jumbotron" style="padding:40px;">
+      
+      <label>Nombre</label><input id="name" value=""/>
+      
+      <button onclick="ViewReport()">Ver Totales</button>
+      <div>
+        Debitos
+      </div>
+      <div id="view">
+
+      </div>
+      <div>
+        Creditos
+      </div>
+      <div id="view1">
+
+      </div>
+    </div>
+    
+
+
+  </div>
+</body>
+
+</html>
+<script>
+  function ViewReport() {
+    alert('Informacion en Proceso.....');
+    var name=$('#name').val();
+    var cui=$('#cui').val();
+    var apellido=$('#apellido').val();
+    $.ajax({
+      url: '/total/View?name='+encodeURI(name),
+      success: function (data) {
+        console.log(data);
+
+        var text="";
+        text="<table class=\"table\">";
+        text=text+"<tr>";
+        text=text+"<th>Total Debitos";
+        text=text+"</th>";
+        text=text+"</tr>";
+        console.log(data);
+        var i=0;
+        var size=data.data.length;
+        for(Row in  data.data) {
+          text=text+"<tr>";
+          text=text+"<td>";
+          text=text+data.data[i].total;
+          text=text+"</td>";
+          text=text+"</tr>";
+          i=i+1;
+        }
+        text=text+"</table>";
+        $("#view").append(text);
+
+
+        text="";
+        text="<table class=\"table\">";
+        text=text+"<tr>";
+        text=text+"<th>Total Creditos";
+        text=text+"</th>";
+        text=text+"</tr>";
+        console.log(data);
+        i=0;
+        size=data.data1.length;
+        for(Row in  data.data1){
+          text=text+"<tr>";
+          text=text+"<td>";
+          text=text+data.data1[i].total;
+          text=text+"</td>";
+          text=text+"</tr>";
+          i=i+1;
+        }
+        
+
+        text=text+"</table>";
+
+        $("#view1").append(text);
+        
+      }
+    });
+  }
+
+</script>
